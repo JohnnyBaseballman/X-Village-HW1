@@ -2,7 +2,6 @@ import random
 from copy import deepcopy
 class Matrix:
     def __init__(self,rows,cols):
-        self.t =[]
         self.rows=rows
         self.cols=cols
         self.t =[[random.randint(0,9) for j in range(self.cols)]for i in range (self.rows)]#由外向內執行
@@ -10,31 +9,33 @@ class Matrix:
 
     def add(self, m):
         """return a new Matrix object after summation"""
+        C=Matrix(arows,acols)
         if self.rows==m.rows and self.cols==m.cols:
             for i in range (self.rows):                  
                 for j in range(self.cols):
                     C.t[i][j]=self.t[i][j]+m.t[i][j]
-            return C.t   
+            return C
         else:
             print("Matrixs' size should be in same size")
-        # except IndexError :
-        #     print("Matrixs' size should be in same size")
-        pass
+            return None
 
     def sub(self, m):
         """return a new Matrix object after substraction"""
+        C=Matrix(arows,acols)
         if self.rows==m.rows and self.cols==m.cols:
             for i in range (self.rows):                  
                 for j in range(self.cols):
                     C.t[i][j]=self.t[i][j]-m.t[i][j]
-            return C.t   
+            return C 
         else :
             print("Matrixs' size should be in same size")
-        pass
+            return None
 
     def mul(self, m):
         """return a new Matrix object after multiplication"""
-        if self.cols==m.rows:
+        
+        D=Matrix(arows,bcols)
+        if self.cols==m.rows and self.rows==m.cols:
             E=[]
             for i in range (self.rows):
                 new_rows=[]
@@ -48,25 +49,28 @@ class Matrix:
                 for x in range (m.cols):
                     D.t[i][x]=E[i][x]          
             return D
-            
         else:
             print("None")
-        pass
+            return None
 
     def transpose(self):
         """return a new Matrix object after transpose"""
-        for i in range (self.rows):                  
+        K=Matrix(bcols,arows)
+        if not None:
+            for i in range (self.rows):                  
                 for x in range(self.cols):
-                    F.t[x][i]=D.t[i][x]
-        return F
-        pass
+                    K.t[x][i]=self.t[i][x]
+            return K
+        else:
+            print("None")
+            return None
     
     def display(self):
         """Display the content in the matrix"""
         for i in range (self.rows):                  
             for j in range(self.cols):
                 print (self.t[i][j],end=' ')
-            print()
+            print('')
         pass
 
 arows=int(input("Enter A matrixi's rows:"))
@@ -79,18 +83,33 @@ bcols=int(input("Enter B matrixi's cols:"))
 print ("Matrix B("+str(brows)+","+str(bcols)+"):")
 B=Matrix(brows,bcols)
 B.display()
-C=Matrix(arows,acols)
-D=Matrix(arows,bcols)
-F=Matrix(arows,bcols)
 print("========== A+B ========== ")
-A.add(B)
-C.display()
+SUM=A.add(B)
+if SUM==None:
+    pass
+else:
+    SUM.display()
 print("========== A-B ========== ")
-A.sub(B)
-C.display()
+MIN=A.sub(B)
+if MIN==None:
+    pass
+else:
+    MIN.display()
 print("========== A*B ========== ")
-A.mul(B)
-D.display()
+F=A.mul(B)
+if F==None:
+    pass
+else:
+    F.display()
 print("===== THE Transpose of A*B ===== ")
-D.transpose()
-F.display()
+G=Matrix(arows,bcols)
+if F == None:
+    print("None")
+    pass
+else:
+    G=F
+    L=G.transpose()
+    if L==None:
+        pass
+    else:
+        L.display()
